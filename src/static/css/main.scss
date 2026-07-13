@@ -60,6 +60,12 @@ a:hover { text-decoration-color: var(--text); }
 
 .copy-email:hover { text-decoration-color: var(--text); }
 .site-header > .copy-email { justify-self: end; }
+.copy-status {
+  margin-left: 10px;
+  color: var(--muted);
+  font-size: .75rem;
+  text-decoration: none;
+}
 
 main,
 footer {
@@ -212,8 +218,8 @@ footer {
   .site-header,
   main,
   footer { width: min(calc(100% - 32px), var(--content)); }
-  .site-header > .copy-email:not(.copied) { font-size: 0; }
-  .site-header > .copy-email:not(.copied)::before { content: 'Email'; font-size: .875rem; }
+  .site-header > .copy-email .email-value { display: none; }
+  .site-header > .copy-email::before { content: 'Email'; font-size: .875rem; }
   .intro h1 { font-size: 3.35rem; }
 }
 

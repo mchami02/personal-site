@@ -5,7 +5,7 @@
 import '@testing-library/jest-dom';
 import React from 'react';
 import {
-  cleanup, fireEvent, render, waitFor,
+  act, cleanup, fireEvent, render,
 } from '@testing-library/react';
 import App from '../App';
 
@@ -13,6 +13,7 @@ describe('portfolio', () => {
   let container;
 
   beforeEach(() => {
+    jest.useFakeTimers();
     Object.defineProperty(navigator, 'clipboard', {
       configurable: true,
       value: { writeText: jest.fn().mockResolvedValue(undefined) },
@@ -20,13 +21,17 @@ describe('portfolio', () => {
     ({ container } = render(<App />));
   });
 
-  afterEach(() => cleanup());
+  afterEach(() => {
+    cleanup();
+    jest.useRealTimers();
+  });
 
   it('renders factual experience with Jump as a past position', () => {
     expect(container).toHaveTextContent('Ex ML Research Engineer Intern @ Jump Trading and MSc CS @ ETH Zurich');
     expect(container).toHaveTextContent('Research in PINNs and CV');
     expect(container).toHaveTextContent('Previous position at Jump Trading');
     expect(container).toHaveTextContent('ML Research Engineer Intern');
+    expect(container).toHaveTextContent('May — Jul 2026');
     expect(container).not.toHaveTextContent('Events Team Member');
     expect(container).not.toHaveTextContent('currently at Jump Trading');
   });
@@ -63,12 +68,16 @@ describe('portfolio', () => {
       .toBeInTheDocument();
   });
 
-  it('copies the email without opening a mail client', async () => {
+  it('copies the email and shows temporary confirmation', () => {
     const copyButtons = [...container.querySelectorAll('button.copy-email')];
     expect(copyButtons).toHaveLength(2);
     fireEvent.click(copyButtons[0]);
-    await waitFor(() => expect(copyButtons[0]).toHaveTextContent('Copied'));
+    expect(copyButtons[0]).toHaveTextContent('mchami.uni@gmail.com');
+    expect(copyButtons[0]).toHaveTextContent('Copied');
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith('mchami.uni@gmail.com');
+    act(() => jest.advanceTimersByTime(1600));
+    expect(copyButtons[0]).not.toHaveTextContent('Copied');
+    expect(copyButtons[0]).toHaveTextContent('mchami.uni@gmail.com');
     expect(container.querySelector('a[href^="mailto:"]')).not.toBeInTheDocument();
     expect(container.querySelector('a[href="https://www.linkedin.com/in/mamoun-chami/"]'))
       .toBeInTheDocument();

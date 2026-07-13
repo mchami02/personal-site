@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, {
+  useEffect, useRef, useState,
+} from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import './static/css/main.scss';
 
 const experience = [
   {
-    period: 'Past position',
+    period: 'May — Jul 2026',
     role: 'ML Research Engineer Intern',
     organisation: 'Jump Trading',
     organisationUrl: 'https://www.jumptrading.com/',
@@ -120,6 +122,9 @@ const email = 'mchami.uni@gmail.com';
 
 const CopyEmail = () => {
   const [copied, setCopied] = useState(false);
+  const resetTimer = useRef();
+
+  useEffect(() => () => window.clearTimeout(resetTimer.current), []);
 
   const copyFallback = () => {
     try {
@@ -139,6 +144,8 @@ const CopyEmail = () => {
 
   const copy = () => {
     setCopied(true);
+    window.clearTimeout(resetTimer.current);
+    resetTimer.current = window.setTimeout(() => setCopied(false), 1600);
     if (navigator.clipboard?.writeText) {
       navigator.clipboard.writeText(email).catch(copyFallback);
     } else {
@@ -147,8 +154,9 @@ const CopyEmail = () => {
   };
 
   return (
-    <button className={`copy-email${copied ? ' copied' : ''}`} type="button" onClick={copy}>
-      {copied ? 'Copied' : email}
+    <button className="copy-email" type="button" onClick={copy}>
+      <span className="email-value">{email}</span>
+      <span className="copy-status" aria-live="polite">{copied ? 'Copied' : ''}</span>
     </button>
   );
 };
