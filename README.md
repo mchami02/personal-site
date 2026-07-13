@@ -24,6 +24,6 @@ Connect this repository to Cloudflare Pages with:
 - Framework preset: **Create React App**
 - Build command: `npm run build`
 - Build output directory: `build`
-- Node.js version: `20` or newer
+- Node.js version: `22.16.0` or newer
 
 No environment variables or server runtime are required. The site is fully static.

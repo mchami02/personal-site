@@ -8,7 +8,7 @@
     "url": "https://github.com/mchami02/personal-site.git"
   },
   "engines": {
-    "node": ">=16.x"
+    "node": ">=22.0.0"
   },
   "scripts": {
     "analyze": "npm run build && source-map-explorer build/static/js/*.chunk.js",
