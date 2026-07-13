@@ -31,13 +31,6 @@ const experience = [
     organisationUrl: 'https://www.oracle.com/',
     description: 'Completed training in Linux, Bash, Git, Docker and Kubernetes, then contributed to Oracle’s document-management system and internal development workflows.',
   },
-  {
-    period: '2021 — 2022',
-    role: 'Events Team Member',
-    organisation: 'CLIC · EPFL',
-    organisationUrl: 'https://clic.epfl.ch/',
-    description: 'Organised dinners, concerts and community activities for students and faculty in EPFL’s computer science association.',
-  },
 ];
 
 const projects = [
@@ -57,6 +50,8 @@ const projects = [
     organisation: 'Swiss Data Science Center · Dr Christian Donner',
     organisationUrl: 'https://datascience.ch/',
     description: 'Evaluated Neural Laplace on 44 chaotic systems, outperforming baselines by 23% and accurately modelling 26 systems. Identified a Lyapunov-exponent threshold and tested limitations on noisier real-world data.',
+    researchUrl: '/files/enhancing-neural-laplace.pdf',
+    researchLabel: 'Read paper',
   },
   {
     period: '2024 — 2025',
@@ -64,13 +59,19 @@ const projects = [
     organisation: 'ETH Zürich',
     organisationUrl: 'https://ethz.ch/',
     description: 'Developed Easy-to-Forget, a replay-buffer sampling strategy prioritising difficult examples. It achieved 63.4% Class-IL accuracy on CIFAR-10 with low computational overhead; broader CIFAR-100 experiments identified scalability limits.',
+    researchUrl: '/files/easy-to-forget.pdf',
+    researchLabel: 'Read paper',
   },
   {
     period: '2024',
     title: 'Galaxy: large-scale Jupyter notebook analysis',
-    organisation: 'ETH Zürich · Prof. April Yi Wang',
+    organisation: 'ETH Zürich',
     organisationUrl: 'https://ethz.ch/',
+    supervisor: 'Prof. April Yi Wang',
+    supervisorUrl: 'https://aprilwang.me/',
     description: 'Lead-authored a JupyterLab extension that uses language models to classify and cluster notebook cells with 75% accuracy. In a user study, Galaxy reduced reported mental demand by 18%, effort by 19% and frustration by 30%; 80% of participants preferred it.',
+    researchUrl: '/files/galaxy-submitted-paper.pdf',
+    researchLabel: 'Read submitted paper',
   },
 ];
 
@@ -122,7 +123,7 @@ const App = () => (
   <HelmetProvider>
     <Helmet>
       <title>Mamoun Chami — Computer Science</title>
-      <meta name="description" content="Mamoun Chami is a computer scientist with experience in machine learning, computer vision, scientific computing and developer tools." />
+      <meta name="description" content="Mamoun Chami is a former ML Research Engineer at Jump Trading and a Computer Science master's graduate from ETH Zürich." />
       <meta property="og:title" content="Mamoun Chami — Computer Science" />
       <meta property="og:description" content="Experience, research projects and education in computer science and machine learning." />
       <meta name="theme-color" content="#ffffff" />
@@ -143,8 +144,9 @@ const App = () => (
         <p className="kicker">Computer science · Machine learning · Research</p>
         <h1 id="intro-title">Mamoun Chami</h1>
         <p className="summary">
-          Computer scientist with experience in scientific machine learning, computer
-          vision, time-series modelling and developer tools.
+          Former ML Research Engineer at Jump Trading and Computer Science master’s
+          graduate from ETH Zürich, with research in scientific machine learning,
+          computer vision and time-series modelling.
         </p>
         <div className="intro-links">
           <a href="mailto:mchami.uni@gmail.com">mchami.uni@gmail.com</a>
@@ -185,6 +187,14 @@ const App = () => (
                   <a href={project.organisationUrl} target="_blank" rel="noreferrer">
                     {project.organisation} <Arrow />
                   </a>
+                  {project.supervisorUrl && (
+                    <>
+                      {' · '}
+                      <a href={project.supervisorUrl} target="_blank" rel="noreferrer">
+                        {project.supervisor} <Arrow />
+                      </a>
+                    </>
+                  )}
                 </p>
                 <p className="description">{project.description}</p>
                 {(project.researchUrl || project.groupUrl) && (

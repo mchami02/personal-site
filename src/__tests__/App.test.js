@@ -17,10 +17,24 @@ describe('portfolio', () => {
   afterEach(() => cleanup());
 
   it('renders factual experience with Jump as a past position', () => {
+    expect(container).toHaveTextContent('Former ML Research Engineer at Jump Trading');
+    expect(container).toHaveTextContent('Computer Science master’s graduate from ETH Zürich');
     expect(container).toHaveTextContent('Previous position at Jump Trading');
     expect(container).toHaveTextContent('ML Research Engineer');
-    expect(container).toHaveTextContent('Events Team Member');
+    expect(container).not.toHaveTextContent('Events Team Member');
     expect(container).not.toHaveTextContent('currently at Jump Trading');
+  });
+
+  it('links each research paper and Prof. April Wang', () => {
+    const researchSection = container.querySelector('#projects');
+    expect(researchSection.querySelector('a[href="/files/enhancing-neural-laplace.pdf"]'))
+      .toBeInTheDocument();
+    expect(researchSection.querySelector('a[href="/files/easy-to-forget.pdf"]'))
+      .toBeInTheDocument();
+    expect(researchSection.querySelector('a[href="/files/galaxy-submitted-paper.pdf"]'))
+      .toBeInTheDocument();
+    expect(researchSection.querySelector('a[href="https://aprilwang.me/"]'))
+      .toHaveTextContent('Prof. April Yi Wang');
   });
 
   it('includes coursework without publishing grades', () => {
