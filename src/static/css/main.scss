@@ -142,8 +142,10 @@ footer {
   font-size: .93rem;
 }
 
-.research-link {
-  display: inline-block;
+.research-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
   margin-top: 16px;
   font-size: .85rem;
 }

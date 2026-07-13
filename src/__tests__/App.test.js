@@ -31,12 +31,13 @@ describe('portfolio', () => {
     expect(container).not.toHaveTextContent('5.3 / 6');
   });
 
-  it('places Berkeley in research and links to the research group', () => {
+  it('places Berkeley in research and links to the thesis', () => {
     const experienceSection = container.querySelector('#experience');
     const researchSection = container.querySelector('#projects');
     expect(experienceSection).not.toHaveTextContent('Visiting Student Researcher');
     expect(researchSection).toHaveTextContent('Visiting Student Researcher');
-    expect(researchSection.querySelector('a[href="https://bayen.berkeley.edu/"]'))
+    expect(researchSection).toHaveTextContent('WaveNO: Solving PDEs using Physics-Informed Attention Bias');
+    expect(researchSection.querySelector('a[href="/files/waveno-thesis.pdf"]'))
       .toBeInTheDocument();
   });
 

@@ -43,12 +43,13 @@ const experience = [
 const projects = [
   {
     period: 'Oct 2025 — Mar 2026',
-    title: 'Neural methods for nonlinear hyperbolic PDEs',
+    title: 'WaveNO: Solving PDEs using Physics-Informed Attention Bias',
     organisation: 'University of California, Berkeley · CITRIS',
     organisationUrl: 'https://www.berkeley.edu/',
-    description: 'Visiting Student Researcher supervised by Prof. Alexandre Bayen. Developed neural network approaches beginning with Hamilton–Jacobi and extending to Aw–Rascle–Zhang, combining theoretical problem formulation with neural methods to improve accuracy over classical numerical approaches.',
-    researchUrl: 'https://bayen.berkeley.edu/',
-    researchLabel: 'Berkeley research group',
+    description: 'Master thesis research completed as a Visiting Student Researcher, supervised by Prof. Alexandre Bayen, Prof. Hossein Matin and Prof. Niao He. Introduced WaveNO, a transformer-based neural operator with a physics-informed attention bias for hyperbolic conservation laws, evaluated on the LWR traffic-flow model and the Aw–Rascle–Zhang system.',
+    researchUrl: '/files/waveno-thesis.pdf',
+    researchLabel: 'Read thesis',
+    groupUrl: 'https://bayen.berkeley.edu/',
   },
   {
     period: '2024 — 2025',
@@ -186,10 +187,19 @@ const App = () => (
                   </a>
                 </p>
                 <p className="description">{project.description}</p>
-                {project.researchUrl && (
-                  <a className="research-link" href={project.researchUrl} target="_blank" rel="noreferrer">
-                    {project.researchLabel} <Arrow />
-                  </a>
+                {(project.researchUrl || project.groupUrl) && (
+                  <div className="research-links">
+                    {project.researchUrl && (
+                      <a href={project.researchUrl} target="_blank" rel="noreferrer">
+                        {project.researchLabel} <Arrow />
+                      </a>
+                    )}
+                    {project.groupUrl && (
+                      <a href={project.groupUrl} target="_blank" rel="noreferrer">
+                        Berkeley research group <Arrow />
+                      </a>
+                    )}
+                  </div>
                 )}
               </div>
             </article>
