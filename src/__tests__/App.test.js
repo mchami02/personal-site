@@ -7,14 +7,6 @@ import React from 'react';
 import { cleanup, render } from '@testing-library/react';
 import App from '../App';
 
-class IntersectionObserverMock {
-  observe() {}
-
-  disconnect() {}
-}
-
-global.IntersectionObserver = IntersectionObserverMock;
-
 describe('portfolio', () => {
   let container;
 
@@ -22,18 +14,25 @@ describe('portfolio', () => {
     ({ container } = render(<App />));
   });
 
-  afterEach(() => {
-    cleanup();
+  afterEach(() => cleanup());
+
+  it('renders factual experience with Jump as a past position', () => {
+    expect(container).toHaveTextContent('Previous position at Jump Trading');
+    expect(container).toHaveTextContent('Visiting Student Researcher');
+    expect(container).toHaveTextContent('Events Team Member');
+    expect(container).not.toHaveTextContent('currently at Jump Trading');
   });
 
-  it('renders Mamoun’s profile and current company', () => {
-    expect(container).toHaveTextContent('Jump Trading');
-    expect(container).toHaveTextContent('UC Berkeley');
+  it('includes coursework without publishing grades', () => {
+    expect(container).toHaveTextContent('Selected coursework');
+    expect(container).toHaveTextContent('Machine Learning');
+    expect(container).not.toHaveTextContent('5.3 / 6');
   });
 
-  it('provides working contact destinations', () => {
+  it('provides contact links without a phone number', () => {
     expect(container.querySelector('a[href="mailto:mchami.uni@gmail.com"]')).toBeInTheDocument();
     expect(container.querySelector('a[href="https://www.linkedin.com/in/mamoun-chami/"]'))
       .toBeInTheDocument();
+    expect(container.querySelector('a[href^="tel:"]')).not.toBeInTheDocument();
   });
 });
