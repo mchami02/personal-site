@@ -17,6 +17,9 @@ npm run build
 
 The generated site is written to `build/`.
 
+For Cloudflare Workers Builds, use `npx wrangler deploy`. The Wrangler configuration
+deploys the generated `build/` directory as a single-page application.
+
 ## Cloudflare Pages
 
 Connect this repository to Cloudflare Pages with:
