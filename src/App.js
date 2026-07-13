@@ -5,59 +5,70 @@ import './static/css/main.scss';
 const experience = [
   {
     period: 'Past position',
-    role: 'Jump Trading',
-    organisation: 'Professional experience',
+    role: 'ML Research Engineer',
+    organisation: 'Jump Trading',
+    organisationUrl: 'https://www.jumptrading.com/',
     description: 'Previous position at Jump Trading.',
-  },
-  {
-    period: 'Oct 2025 — Mar 2026',
-    role: 'Visiting Student Researcher',
-    organisation: 'University of California, Berkeley · CITRIS',
-    description: 'Supervised by Prof. Alexandre Bayen. Developed neural network approaches for nonlinear hyperbolic partial differential equations, beginning with Hamilton–Jacobi and extending to Aw–Rascle–Zhang. Combined theoretical problem formulation with neural methods to improve accuracy over classical numerical approaches.',
   },
   {
     period: 'Jun — Sep 2025',
     role: 'Machine Learning Engineer Intern',
     organisation: 'Flink Robotics',
+    organisationUrl: 'https://www.flink.so/',
     description: 'Improved box localization from RGB-D images and point clouds using machine-learning and optimization methods. Integrated efficient models and reworked the optimization pipeline, producing a 3–5× faster iteration cycle and approximately doubling pose-estimation accuracy.',
   },
   {
     period: '2024',
     role: 'Teaching Assistant',
     organisation: 'ETH Zürich',
+    organisationUrl: 'https://ethz.ch/',
     description: 'Teaching assistant for Introduction to Machine Learning.',
   },
   {
     period: 'Jul — Sep 2023',
     role: 'Research Assistant',
     organisation: 'Oracle',
+    organisationUrl: 'https://www.oracle.com/',
     description: 'Completed training in Linux, Bash, Git, Docker and Kubernetes, then contributed to Oracle’s document-management system and internal development workflows.',
   },
   {
     period: '2021 — 2022',
     role: 'Events Team Member',
     organisation: 'CLIC · EPFL',
+    organisationUrl: 'https://clic.epfl.ch/',
     description: 'Organised dinners, concerts and community activities for students and faculty in EPFL’s computer science association.',
   },
 ];
 
 const projects = [
   {
+    period: 'Oct 2025 — Mar 2026',
+    title: 'Neural methods for nonlinear hyperbolic PDEs',
+    organisation: 'University of California, Berkeley · CITRIS',
+    organisationUrl: 'https://www.berkeley.edu/',
+    description: 'Visiting Student Researcher supervised by Prof. Alexandre Bayen. Developed neural network approaches beginning with Hamilton–Jacobi and extending to Aw–Rascle–Zhang, combining theoretical problem formulation with neural methods to improve accuracy over classical numerical approaches.',
+    researchUrl: 'https://bayen.berkeley.edu/',
+    researchLabel: 'Berkeley research group',
+  },
+  {
     period: '2024 — 2025',
     title: 'Continuous-time modelling and chaotic systems forecasting',
     organisation: 'Swiss Data Science Center · Dr Christian Donner',
+    organisationUrl: 'https://datascience.ch/',
     description: 'Evaluated Neural Laplace on 44 chaotic systems, outperforming baselines by 23% and accurately modelling 26 systems. Identified a Lyapunov-exponent threshold and tested limitations on noisier real-world data.',
   },
   {
     period: '2024 — 2025',
     title: 'Continual learning and data selection',
     organisation: 'ETH Zürich',
+    organisationUrl: 'https://ethz.ch/',
     description: 'Developed Easy-to-Forget, a replay-buffer sampling strategy prioritising difficult examples. It achieved 63.4% Class-IL accuracy on CIFAR-10 with low computational overhead; broader CIFAR-100 experiments identified scalability limits.',
   },
   {
     period: '2024',
     title: 'Galaxy: large-scale Jupyter notebook analysis',
     organisation: 'ETH Zürich · Prof. April Yi Wang',
+    organisationUrl: 'https://ethz.ch/',
     description: 'Lead-authored a JupyterLab extension that uses language models to classify and cluster notebook cells with 75% accuracy. In a user study, Galaxy reduced reported mental demand by 18%, effort by 19% and frustration by 30%; 80% of participants preferred it.',
   },
 ];
@@ -66,18 +77,21 @@ const education = [
   {
     period: '2023 — 2026',
     institution: 'ETH Zürich',
+    institutionUrl: 'https://ethz.ch/',
     degree: 'MSc Computer Science',
     detail: 'Major in Machine Intelligence · Minor in Data Management Systems',
   },
   {
     period: '2022 — 2023',
     institution: 'University of Washington',
+    institutionUrl: 'https://www.washington.edu/',
     degree: 'Academic year abroad · Computer Science',
     detail: 'Seattle, Washington',
   },
   {
     period: '2020 — 2023',
     institution: 'EPFL',
+    institutionUrl: 'https://www.epfl.ch/',
     degree: 'BSc Computer Science',
     detail: 'Lausanne, Switzerland',
   },
@@ -146,7 +160,11 @@ const App = () => (
               <p className="period">{item.period}</p>
               <div>
                 <h3>{item.role}</h3>
-                <p className="organisation">{item.organisation}</p>
+                <p className="organisation">
+                  <a href={item.organisationUrl} target="_blank" rel="noreferrer">
+                    {item.organisation} <Arrow />
+                  </a>
+                </p>
                 <p className="description">{item.description}</p>
               </div>
             </article>
@@ -162,8 +180,17 @@ const App = () => (
               <p className="period">{project.period}</p>
               <div>
                 <h3>{project.title}</h3>
-                <p className="organisation">{project.organisation}</p>
+                <p className="organisation">
+                  <a href={project.organisationUrl} target="_blank" rel="noreferrer">
+                    {project.organisation} <Arrow />
+                  </a>
+                </p>
                 <p className="description">{project.description}</p>
+                {project.researchUrl && (
+                  <a className="research-link" href={project.researchUrl} target="_blank" rel="noreferrer">
+                    {project.researchLabel} <Arrow />
+                  </a>
+                )}
               </div>
             </article>
           ))}
@@ -177,17 +204,21 @@ const App = () => (
             <article className="entry" key={item.institution}>
               <p className="period">{item.period}</p>
               <div>
-                <h3>{item.institution}</h3>
+                <h3>
+                  <a href={item.institutionUrl} target="_blank" rel="noreferrer">
+                    {item.institution} <Arrow />
+                  </a>
+                </h3>
                 <p className="organisation">{item.degree}</p>
                 <p className="description">{item.detail}</p>
               </div>
             </article>
           ))}
         </div>
-        <div className="coursework">
-          <h3>Selected coursework</h3>
+        <details className="coursework">
+          <summary>Selected coursework <span aria-hidden="true">+</span></summary>
           <p>{coursework.join(' · ')}</p>
-        </div>
+        </details>
       </section>
     </main>
 

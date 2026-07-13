@@ -129,6 +129,12 @@ footer {
   font-size: .9rem;
 }
 
+.organisation a,
+.education-entries h3 a { text-decoration: none; }
+
+.organisation a:hover,
+.education-entries h3 a:hover { text-decoration: underline; }
+
 .description {
   max-width: 720px;
   margin: 14px 0 0;
@@ -136,22 +142,33 @@ footer {
   font-size: .93rem;
 }
 
-.coursework {
-  display: grid;
-  grid-template-columns: 180px minmax(0, 1fr);
-  gap: 36px;
-  margin-top: 48px;
+.research-link {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: .85rem;
 }
 
-.coursework h3 {
-  margin: 0;
+.coursework {
+  margin-top: 48px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.coursework summary {
+  padding: 20px 0;
+  cursor: pointer;
+  list-style: none;
   font-size: .82rem;
   font-weight: 600;
 }
 
+.coursework summary::-webkit-details-marker { display: none; }
+.coursework summary span { float: right; font-size: 1.1rem; font-weight: 400; }
+.coursework[open] summary span { transform: rotate(45deg); }
+
 .coursework p {
   max-width: 760px;
-  margin: 0;
+  margin: 0 0 24px;
   color: var(--muted);
   font-size: .88rem;
 }
