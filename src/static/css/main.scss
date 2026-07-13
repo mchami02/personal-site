@@ -46,7 +46,20 @@ a:hover { text-decoration-color: var(--text); }
 .site-header nav { display: flex; gap: 28px; }
 .site-header nav a { color: var(--muted); text-decoration: none; }
 .site-header nav a:hover { color: var(--text); }
-.email-link { justify-self: end; }
+.copy-email {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-color: #aaa;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+.copy-email:hover { text-decoration-color: var(--text); }
+.site-header > .copy-email { justify-self: end; }
 
 main,
 footer {
@@ -83,6 +96,8 @@ footer {
   font-size: clamp(1.1rem, 2vw, 1.35rem);
   line-height: 1.55;
 }
+
+.summary span { display: block; }
 
 .intro-links {
   display: flex;
@@ -197,8 +212,8 @@ footer {
   .site-header,
   main,
   footer { width: min(calc(100% - 32px), var(--content)); }
-  .email-link { font-size: 0; }
-  .email-link::before { content: 'Email'; font-size: .875rem; }
+  .site-header > .copy-email:not(.copied) { font-size: 0; }
+  .site-header > .copy-email:not(.copied)::before { content: 'Email'; font-size: .875rem; }
   .intro h1 { font-size: 3.35rem; }
 }
 

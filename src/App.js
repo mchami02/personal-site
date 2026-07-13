@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import './static/css/main.scss';
 
 const experience = [
   {
     period: 'Past position',
-    role: 'ML Research Engineer',
+    role: 'ML Research Engineer Intern',
     organisation: 'Jump Trading',
     organisationUrl: 'https://www.jumptrading.com/',
     description: 'Previous position at Jump Trading.',
@@ -71,7 +71,7 @@ const projects = [
     supervisorUrl: 'https://aprilwang.me/',
     description: 'Lead-authored a JupyterLab extension that uses language models to classify and cluster notebook cells with 75% accuracy. In a user study, Galaxy reduced reported mental demand by 18%, effort by 19% and frustration by 30%; 80% of participants preferred it.',
     researchUrl: '/files/galaxy-submitted-paper.pdf',
-    researchLabel: 'Read submitted paper',
+    researchLabel: 'Read paper',
   },
 ];
 
@@ -88,14 +88,12 @@ const education = [
     institution: 'University of Washington',
     institutionUrl: 'https://www.washington.edu/',
     degree: 'Academic year abroad · Computer Science',
-    detail: 'Seattle, Washington',
   },
   {
     period: '2020 — 2023',
     institution: 'EPFL',
     institutionUrl: 'https://www.epfl.ch/',
     degree: 'BSc Computer Science',
-    detail: 'Lausanne, Switzerland',
   },
 ];
 
@@ -118,12 +116,48 @@ const coursework = [
 ];
 
 const Arrow = () => <span aria-hidden="true">↗</span>;
+const email = 'mchami.uni@gmail.com';
+
+const CopyEmail = () => {
+  const [copied, setCopied] = useState(false);
+
+  const copyFallback = () => {
+    try {
+      const input = document.createElement('textarea');
+      input.value = email;
+      input.setAttribute('readonly', '');
+      input.style.position = 'fixed';
+      input.style.opacity = '0';
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+    } catch {
+      // Clipboard access can be denied by embedded browsers.
+    }
+  };
+
+  const copy = () => {
+    setCopied(true);
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(email).catch(copyFallback);
+    } else {
+      copyFallback();
+    }
+  };
+
+  return (
+    <button className={`copy-email${copied ? ' copied' : ''}`} type="button" onClick={copy}>
+      {copied ? 'Copied' : email}
+    </button>
+  );
+};
 
 const App = () => (
   <HelmetProvider>
     <Helmet>
       <title>Mamoun Chami — Computer Science</title>
-      <meta name="description" content="Mamoun Chami is a former ML Research Engineer at Jump Trading and a Computer Science master's graduate from ETH Zürich." />
+      <meta name="description" content="Ex ML Research Engineer Intern at Jump Trading and MSc Computer Science at ETH Zürich. Research in PINNs and computer vision." />
       <meta property="og:title" content="Mamoun Chami — Computer Science" />
       <meta property="og:description" content="Experience, research projects and education in computer science and machine learning." />
       <meta name="theme-color" content="#ffffff" />
@@ -136,7 +170,7 @@ const App = () => (
         <a href="#projects">Projects</a>
         <a href="#education">Education</a>
       </nav>
-      <a className="email-link" href="mailto:mchami.uni@gmail.com">Email <Arrow /></a>
+      <CopyEmail />
     </header>
 
     <main id="top">
@@ -144,12 +178,11 @@ const App = () => (
         <p className="kicker">Computer science · Machine learning · Research</p>
         <h1 id="intro-title">Mamoun Chami</h1>
         <p className="summary">
-          Former ML Research Engineer at Jump Trading and Computer Science master’s
-          graduate from ETH Zürich, with research in scientific machine learning,
-          computer vision and time-series modelling.
+          <span>Ex ML Research Engineer Intern @ Jump Trading and MSc CS @ ETH Zurich</span>
+          <span>Research in PINNs and CV</span>
         </p>
         <div className="intro-links">
-          <a href="mailto:mchami.uni@gmail.com">mchami.uni@gmail.com</a>
+          <CopyEmail />
           <a href="https://www.linkedin.com/in/mamoun-chami/" target="_blank" rel="noreferrer">LinkedIn <Arrow /></a>
           <a href="https://github.com/mchami02" target="_blank" rel="noreferrer">GitHub <Arrow /></a>
         </div>
@@ -230,7 +263,7 @@ const App = () => (
                   </a>
                 </h3>
                 <p className="organisation">{item.degree}</p>
-                <p className="description">{item.detail}</p>
+                {item.detail && <p className="description">{item.detail}</p>}
               </div>
             </article>
           ))}
